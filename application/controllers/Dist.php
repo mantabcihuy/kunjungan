@@ -3,6 +3,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dist extends CI_Controller {
 
+	public function view_form_matakuliah() {
+		$data = array(
+			'title' => "Form Matakuliah"
+		);
+		$this->load->view('dist/view-form-matakuliah', $data);
+	}
+
+	public function cetak() {
+		$data = array(
+			'title' => "Form Matakuliah"
+		);
+		$this->form_validation->set_rules('kode', 'Kode Matakuliah', 'required|min_length[3]', [
+			'required' => 'Kode Matakuliah harus diisi',
+			'min_length' => 'Kode terlalu pendek'
+		]);
+
+		$this->form_validation->set_rules('nama', 'Nama Matakuliah', 'required|min_length[3]', [
+			'required' => 'Nama Matakuliah harus diisi',
+			'min_length' => 'Kode terlalu pendek'
+		]);
+
+		if ($this->form_validation->run() != true) {
+			$this->load->view('dist/view-form-matakuliah', $data);
+		} else {
+			$data = [
+				'title' => 'Form Matakuliah',
+				'kode' => $this->input->post('kode'),
+				'nama' => $this->input->post('nama'),
+				'sks' => $this->input->post('sks')
+			];
+
+			$this->load->view('dist/view-data-matakuliah', $data);
+		}
+	}
+
+	// end test
+
 	public function index() {
 		$data = array(
 			'title' => "Ecommerce Dashboard"
